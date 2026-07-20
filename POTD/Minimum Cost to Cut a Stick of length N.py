@@ -1,0 +1,2 @@
+def minCutCost(n, cuts):
+    
