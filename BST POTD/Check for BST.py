@@ -45,11 +45,9 @@ def isBST(root):
 
 # root = [2, 1, 3, N, N, N, 5]
 
-root = Node(10)
-root.left = Node(5)
-root.right = Node(20)
-root.right.right = Node(25)
-root.right.left = Node(9)
+root = Node(2)
+root.right = Node(4)
+root.right.left = Node(1)
 
 
 print(isBST(root))
