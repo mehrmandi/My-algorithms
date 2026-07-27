@@ -6,19 +6,15 @@ class Node:
 
 
 def constructTreeUtil(pre, post, preIndex, l, h, postMap):
-    print(preIndex, l, h)
     if preIndex[0] >= len(pre) or l > h:
-        print("111111111111111")
         return None
 
     root = Node(pre[preIndex[0]])
     preIndex[0] += 1
-    print("root, preindex", root.data, preIndex)
 
     # If there is only one element,
     # return it as leaf node
     if l == h:
-        print("222222222")
         return root
 
     # Find the next preorder element
@@ -27,10 +23,8 @@ def constructTreeUtil(pre, post, preIndex, l, h, postMap):
     if i <= h:
         root.left = constructTreeUtil(pre, post, preIndex,
                                       l, i, postMap)
-        print("left", root.data, root.left.data)
         root.right = constructTreeUtil(pre, post, preIndex,
                                        i + 1, h - 1, postMap)
-        print("right", root.data, root.right.data)
 
     return root
     
