@@ -17,6 +17,7 @@ def levelSort(arr):
         # Calculate the number of nodes at the current level
         level_num = 2 ** level if(i + 2 ** level) < n else n - i
         
+        
         # Append the nodes of the current level to the temporary list
         for j in range(level_num):
             q.append(arr[i + j])
