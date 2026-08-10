@@ -1,7 +1,7 @@
 # Given a square matrix mat[][] of size n * n. A zigzag sequence starts from the top and ends at the bottom. 
 # Two consecutive elements of sequence cannot belong to the same column. Return the maximum sum of such a zigzag sequence.
 
-# Using Space-Optimized Dynamic Programming- O(n ^ 2) Time and O(n) Space
+# Using Space-Optimized Dynamic Programming- O(n ^ 2) Time and O(n) Space+
 
 
 def zigzagSequence(mat):
