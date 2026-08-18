@@ -1,3 +1,17 @@
+# Geek wants to send a secret message to his friend Keeg. Instead of sending the original message directly, he encrypts it by inserting the character '*'.
+
+# Keeg decodes the message as follows:
+
+# Traverse the encoded string from left to right and initialize the original string as empty.
+# Whenever a normal character appears, append it to the current original string.
+# Whenever '*' is encountered, remove it and append all characters before it to the end of the current original string.
+# Repeat until no '*' remains.
+# Given the original string s, find the lexicographically smallest encrypted string that decodes to s.
+
+# Using KMP Algorithm - O(n) Time and O(n) Space
+
+
+
 def smallest_encrypted_string(s):
     n = len(s)
 
