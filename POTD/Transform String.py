@@ -16,6 +16,8 @@ def transform(s1, s2):
 
     i = j = len(s1) - 1
     res = 0
+    
+    
 
     while i >= 0:
         if s1[i] == s2[j]:
