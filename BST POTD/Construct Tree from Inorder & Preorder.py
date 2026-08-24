@@ -1,36 +1,93 @@
-class TreeNode:
-    def __init__(self, v):
+# Given inorder and preorder traversals of a Binary Tree in array inorder[] and preorder[] respectively, Construct the Binary Tree and return it’s root.
+
+# Note: All values in inorder[] and preorder[] are distinct.
+
+#  Using Pre-order traversal and Hash map - O(n) Time and O(n) Space
+
+from collections import deque
+class Node:
+    def __init__(self, x):
+        self.data = x
         self.left = None
         self.right = None
-        self.data = v
+
+# Recursive function to build the binary tree.
 
 
-def buildTree(preorder, inorder):
-    res = []
-    if not preorder or not inorder:
+def buildTreeRecur(mp, preorder, preIndex, left, right):
+
+    # For empty inorder array, return None
+    if left > right:
         return None
 
-    inorder_map = {val: index for index, val in enumerate(inorder)}
+    rootVal = preorder[preIndex[0]]
+    preIndex[0] += 1
 
-    def build(pre_start, pre_end, in_start, in_end, res):
-        if pre_start > pre_end:
-            return None
+    root = Node(rootVal)
 
-        root_val = preorder[pre_start]
-        root = TreeNode(root_val)
+    index = mp[rootVal]
 
-        in_index = inorder_map[root_val]
+    # Recursively create the left and right subtree.
+    root.left = buildTreeRecur(mp, preorder, preIndex, left, index - 1)
+    root.right = buildTreeRecur(mp, preorder, preIndex, index + 1, right)
 
-        left_size = in_index - in_start
+    return root
 
-        root.left = build(pre_start + 1, pre_start + left_size, in_start, in_index - 1, res)
+# Function to construct tree from its inorder and preorder traversals
 
-        root.right = build(pre_start + left_size + 1, pre_end, in_index + 1, in_end, res)
 
-        res.append(root.data)
-        return res
+def buildTree(inorder, preorder):
 
-    return build(0, len(preorder) - 1, 0, len(inorder) - 1, res)
+    # Hash map that stores index of a root element in inorder array
+    mp = {value: idx for idx, value in enumerate(inorder)}
+    preIndex = [0]
+
+    return buildTreeRecur(mp, preorder, preIndex, 0, len(inorder) - 1)
+
+
+def getHeight(root, h):
+    if root is None:
+        return h - 1
+    return max(getHeight(root.left, h + 1), getHeight(root.right, h + 1))
+
+
+def levelOrder(root):
+    queue = deque([[root, 0]])
+    lastLevel = 0
+
+    # function to get the height of tree
+    height = getHeight(root, 0)
+
+    # printing the level order of tree
+    while queue:
+        node, lvl = queue.popleft()
+
+        if lvl > lastLevel:
+            print()
+            lastLevel = lvl
+
+        # all levels are printed
+        if lvl > height:
+            break
+
+        # printing null node
+        print("N" if node.data == -1 else node.data, end=" ")
+
+        # null node has no children
+        if node.data == -1:
+            continue
+
+        if node.left is None:
+            queue.append([Node(-1), lvl + 1])
+        else:
+            queue.append([node.left, lvl + 1])
+
+        if node.right is None:
+            queue.append([Node(-1), lvl + 1])
+        else:
+            queue.append([node.right, lvl + 1])
+
+
 
 
 
