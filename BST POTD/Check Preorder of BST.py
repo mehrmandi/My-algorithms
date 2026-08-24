@@ -1,3 +1,5 @@
+# Given an array arr[] consisting of distinct integers, check if the given array can represent preorder traversal of a BST
+
 # Using Stack - O(n) Time and O(n) Space
 
 def canRepresentBST(arr):
