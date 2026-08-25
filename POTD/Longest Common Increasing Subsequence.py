@@ -18,7 +18,6 @@ def lCIS(a, b):
 
         # Compare current element of a with all elements of b
         for j in range(n):
-            print(i, j, currentLength)
 
             # When elements match, extend the LCIS
             if a[i] == b[j]:
