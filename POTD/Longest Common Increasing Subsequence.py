@@ -1,3 +1,8 @@
+# Given two arrays, a[] and b[], find the length of the longest common increasing subsequence(LCIS).
+# A subsequence is a sequence that appears in the same relative order in both arrays, but not necessarily consecutively.
+
+# The Longest Common Increasing Subsequence(LCIS) is defined as the longest sequence that appears in both arrays and whose elements are in strictly increasing order.
+
 # [Expected Approach] Using 1D Dp - O(m*n) Time and O(n) Space--------------
 
 def lCIS(a, b):
@@ -17,12 +22,10 @@ def lCIS(a, b):
 
             # When elements match, extend the LCIS
             if a[i] == b[j]:
-                print("barabar", dp)
                 dp[j] = max(dp[j], currentLength + 1)
 
             # If a[i] is greater, update best LCIS so far
             elif a[i] > b[j]:
-                print("bozorg", dp)
                 currentLength = max(currentLength, dp[j])
 
     # The maximum value in dp gives final LCIS length
