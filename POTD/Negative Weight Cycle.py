@@ -10,14 +10,14 @@
 def isNegativeWeightCycle(V: int, edges: list[list[int]]) -> bool:
     dist = [0] * V
 
-    for i in range(V):
-        for u, v, weight in edges:
-            if dist[u] + weight < dist[v]:
-                dist[v] = dist[u] + weight
+    for _ in range(V - 1):
+        for u, v, w in edges:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
 
-                # Update on the V-th iteration => negative cycle
-                if i == V - 1:
-                    return True
+    for u, v, w in edges:
+        if dist[u] + w < dist[v]:
+            return True
 
     return False
 
