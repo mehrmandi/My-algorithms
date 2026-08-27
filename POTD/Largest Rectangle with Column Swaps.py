@@ -1,3 +1,7 @@
+# Given a binary matrix mat[][] of size n x m, find the maximum area of a rectangle containing only 1s. You are allowed to swap any columns of the matrix any number of times before forming the rectangle. Return the maximum possible rectangle area.
+
+# Counting Sort on Heights - O(n * (n + m)) Time and O(n * m) Space
+
 def maxArea(mat: list[list[int]]) -> int:
     n = len(mat)
     m = len(mat[0])
