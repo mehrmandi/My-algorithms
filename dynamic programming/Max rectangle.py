@@ -1,88 +1,72 @@
-# def makeNewMatrix(mat):
-#     n = len(mat)
-#     m = len(mat[0])
-#     new_mat = [[0 for _ in range(m)] for _ in range(n)]
-#     new_mat[0] = mat[0]
-#
-#     for i in range(1, n):
-#         for j in range(m):
-#             if mat[i][j] == 1:
-#                 new_mat[i][j] = mat[i][j] + new_mat[i - 1][j]
-#
-#     return new_mat
-#
-#
-# def getMaxArea(arr):
-#     n = len(arr)
-#     s = []
-#     res = 0
-#
-#
-#     for i in range(n):
-#         while s and arr[s[-1]] >= arr[i]:
-#             tp = s.pop()
-#             width = i if not s else i - s[-1] - 1
-#
-#             res = max(res, arr[tp] * width)
-#
-#         s.append(i)
-#
-#     while s:
-#         tp = s.pop()
-#         width = n if not s else n - s[-1] - 1
-#         res = max(res, arr[tp] * width)
-#
-#     return res
-#
-# def maxRectangle(mat):
-#     new_mat = makeNewMatrix(mat)
-#     n = len(mat)
-#     max_area = 0
-#
-#     for i in range(n):
-#         max_area = max(max_area, getMaxArea(new_mat[i]))
-#
-#     return max_area
+from typing import List
 
-def maxArea(mat):
-    n, m = len(mat), len(mat[0])
+# Function to find the maximum area of
+# rectangle in a histogram.
 
-    # 2D matrix to store the width of 1's
-    # ending at each cell.
-    memo = [[0] * m for _ in range(n)]
-    print(memo)
-    ans = 0
 
+def getMaxArea(arr: List[int]) -> int:
+    n = len(arr)
+    s = []
+    res = 0
+    tp, curr = 0, 0
+    for i in range(n):
+        while s and arr[s[-1]] >= arr[i]:
+            # The popped item is to be considered as the
+            # smallest element of the histogram
+            tp = s.pop()
+
+            # For the popped item previous smaller element is
+            # just below it in the stack (or current stack top)
+            # and next smaller element is i
+            width = i if not s else i - s[-1] - 1
+
+            res = max(res, arr[tp] * width)
+        s.append(i)
+
+    # For the remaining items in the stack, next smaller does
+    # not exist. Previous smaller is the item just below in
+    # stack.
+    while s:
+        tp = s.pop()
+        curr = arr[tp] * (n if not s else n - s[-1] - 1)
+        res = max(res, curr)
+
+    return res
+
+# Function to find the maximum area of rectangle
+# in a 2D matrix.
+
+
+def maxArea(mat: List[List[int]]) -> int:
+    n = len(mat)
+    m = len(mat[0])
+
+    # Array to store matrix
+    # as a histogram.
+    arr = [0] * m
+
+    res = 0
+
+    # Traverse row by row.
     for i in range(n):
         for j in range(m):
-            if mat[i][j] == 0:
-                continue
-
-            # Set width of 1's at (i, j).
-            if j == 0:
-                memo[i][j] = 1
+            if mat[i][j] == 1:
+                arr[j] += 1
             else:
-                memo[i][j] = 1 + memo[i][j - 1]
+                arr[j] = 0
 
-            width = memo[i][j]
+        res = max(res, getMaxArea(arr))
 
-            # Traverse row by row, update the
-            # minimum width and calculate area.
-            for k in range(i, -1, -1):
-                width = min(width, memo[k][j])
-                area = width * (i - k + 1)
-
-                ans = max(ans, area)
-
-    return ans
+    return res
 
 
+if __name__ == "__main__":
+    mat = [
+        [0, 1, 1, 0],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 0, 0]
+    ]
 
+    print(maxArea(mat))
 
-
-mat = [[0, 1, 1, 0],
-       [1, 1, 1, 1],
-       [1, 1, 1, 1],
-       [1, 1, 0, 0]]
-
-print(maxArea(mat))
