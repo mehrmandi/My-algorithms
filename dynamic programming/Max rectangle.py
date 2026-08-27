@@ -1,3 +1,8 @@
+# Given a 2D binary matrix mat[][] consisting only of 0s and 1s, find the area of the largest rectangle sub-matrix that contains only 1s.
+
+# Using Largest Rectangular Area in a Histogram - O(n * m) Time and O(m) Space
+
+
 from typing import List
 
 # Function to find the maximum area of
