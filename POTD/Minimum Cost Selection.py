@@ -1,4 +1,8 @@
-import heapq
+# Given an n × 3 matrix mat[][], where each row represents the costs of three available choices at a shop, select exactly one choice from each row such that the same choice is not selected in two adjacent rows.
+
+# Return the minimum total cost required.
+
+# Space Optimized Approach - O(n) Time and O(1) Space
 
 def minCost(mat):
     n = len(mat)
