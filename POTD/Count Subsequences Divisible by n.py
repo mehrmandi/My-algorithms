@@ -1,6 +1,6 @@
 # Given a numeric string s containing only digits and an integer n, count the number of non-empty subsequences of s whose numeric value is divisible by n. Return the answer modulo 1e9 + 7.
 
-
+# Space Optimized Approach - O(n * m) Time and O(n) Space
 def countSubsequences(s, n):
 
     MOD = 10**9 + 7
@@ -16,14 +16,16 @@ def countSubsequences(s, n):
 
         # Copy the previous DP state.
         curr = dp[:]
+        print("curr, digit, digit % n", curr, digit, digit % n)
 
         # Start a new subsequence with the current digit.
         curr[digit % n] = (curr[digit % n] + 1) % MOD
 
         # Append the current digit to all existing subsequences.
         for rem in range(n):
-
             newRem = (rem * 10 + digit) % n
+            print("rem, digit, newRem", rem, digit, newRem)
+            print(curr)
             curr[newRem] = (curr[newRem] + dp[rem]) % MOD
 
         # Move to the next digit.
