@@ -16,7 +16,6 @@ def countSubsequences(s, n):
 
         # Copy the previous DP state.
         curr = dp[:]
-        print("curr, digit, digit % n", curr, digit, digit % n)
 
         # Start a new subsequence with the current digit.
         curr[digit % n] = (curr[digit % n] + 1) % MOD
@@ -24,8 +23,6 @@ def countSubsequences(s, n):
         # Append the current digit to all existing subsequences.
         for rem in range(n):
             newRem = (rem * 10 + digit) % n
-            print("rem, digit, newRem", rem, digit, newRem)
-            print(curr)
             curr[newRem] = (curr[newRem] + dp[rem]) % MOD
 
         # Move to the next digit.
