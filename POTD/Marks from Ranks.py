@@ -1,3 +1,10 @@
+# Given three arrays l[], r[], and rank[], where l[i] and r[i] represent the starting and ending marks(inclusive) of the i-th interval. The intervals are sorted in increasing order and do not overlap. The rank of a mark is defined by its position among all valid marks in increasing order, with the smallest mark assigned rank 1, the next smallest rank 2, and so on.
+
+# For each value in rank[], find the corresponding mark and return an array containing the answers in the same order as the queries.
+
+# Using Prefix Sum + Binary Search - O(n + q * log n) Time and O(n) Space
+
+
 def findInterval(prefix, low, high, rank):
 
     while low < high:
