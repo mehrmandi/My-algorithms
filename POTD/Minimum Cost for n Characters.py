@@ -1,3 +1,10 @@
+# Given four integers n, i, d, and c, where:
+
+# i is the cost of inserting a single character,
+# d is the cost of deleting the last character,
+# c is the cost of copying the entire current string and pasting it immediately(thereby doubling its length).
+# Find the minimum cost required to obtain exactly n characters on the screen. Initially, the screen is empty.
+
 
 def minCost(n: int, i: int, d: int, c: int) -> int:
     dp = [0 for _ in range(n + 1)]
