@@ -5,6 +5,8 @@
 # c is the cost of copying the entire current string and pasting it immediately(thereby doubling its length).
 # Find the minimum cost required to obtain exactly n characters on the screen. Initially, the screen is empty.
 
+# Using Dynamic Programming with Tabulation - O(n) Time and O(n) Space
+
 
 def minCost(n: int, i: int, d: int, c: int) -> int:
     dp = [0 for _ in range(n + 1)]
