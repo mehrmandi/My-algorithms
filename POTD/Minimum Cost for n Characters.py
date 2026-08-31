@@ -9,19 +9,29 @@
 
 
 def minCost(n: int, i: int, d: int, c: int) -> int:
+    # dp[x] represents the minimum cost required to obtain exactly x characters.
     dp = [0 for _ in range(n + 1)]
+    
+    # One insertion is required to obtain the first character.
     dp[1] = i
     
-    
+ 
     for j in range(2, n + 1):
+        # Option 1: Insert one character after reaching j - 1 characters.
         new_add = dp[j - 1] + i
         
-        minus_extra = 0 if j % 2 == 0 else 1
-
-        new_minus = dp[j // 2 + minus_extra] + c + minus_extra * d
+        # If j is odd, we need to copy from j//2 + 1 characters # and then delete one extra character. 
+        # For even j, no deletion is needed.
+        delete_extra = 0 if j % 2 == 0 else 1
         
+        # Option 2: # Reach j//2 (or j//2 + 1 for odd j), 
+        # copy the entire string, and delete one character if necessary.
+        new_minus = dp[j // 2 + delete_extra] + c + delete_extra * d
+        
+        # Choose the cheaper of the two possible operations.
         dp[j] = min(new_add, new_minus)
-            
+    
+    # Return the minimum cost required to obtain exactly n characters.        
     return dp[n]
 
 
