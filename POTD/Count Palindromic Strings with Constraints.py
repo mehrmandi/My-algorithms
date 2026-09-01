@@ -1,3 +1,12 @@
+# Given two integers n and k, consider an alphabet consisting of the first k lowercase English letters. Find the number of palindromic strings whose length is less than or equal to n, such that:
+
+# Every character in the string belongs to the given alphabet.
+# No character appears more than twice in the string.
+# Note: Since the answer can be very large, return it modulo 10 ^ 9+7.
+
+# Time : O(min(n, k))
+# space : O(1)
+
 def palindromicStrings(n, k):
     MOD = 10**9 + 7
 
