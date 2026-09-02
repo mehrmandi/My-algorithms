@@ -6,7 +6,7 @@
 
 # Return the number of customers who could not be assigned a computer upon arrival.
 
-
+# Using State-Based Simulation - O(|s|) Time and O(1) Space
 
 def solve(n, s):
     state = [0] * 26
