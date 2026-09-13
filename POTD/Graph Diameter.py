@@ -1,3 +1,9 @@
+# Given an undirected graph(with no cycles) represented using an adjacency list adj[][], find the diameter of the graph.
+# The diameter of a graph(sometimes called the width) is the number of edges on the longest path between two nodes in the graph.
+
+# Note: Graph do not contain any disconnected component.
+
+# Finding ends of diameter - O(n) Time and O(n) Space
 
 def addEdge(adj, u, v):
     adj[u].append(v)
