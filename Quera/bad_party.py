@@ -1,42 +1,80 @@
-def guste():
-    n = int(input())
+import sys
+import os
 
-    size = 300000
+# --- LOCAL TESTING SETUP ---
+# Reads from input.txt if present locally, otherwise reads from standard input
+DEBUG = os.path.exists("input.txt")
+if DEBUG:
+    sys.stdin = open("input.txt", "r")
+# ---------------------------
 
-    edges = []
 
-    parent = [i for i in range(size)]
+def guest():
+    # Increase recursion depth for deep trees if needed
+    sys.setrecursionlimit(500000)
 
-    rep = []
+    # Read all tokens at once
+    input_data = sys.stdin.read().split() if DEBUG else sys.stdin.buffer.read().split()
+    if not input_data:
+        return
 
-    final_rep = []
+    it = iter(input_data)
+    n = int(next(it))
 
-    for i in range(n):
-        person = [int(x) for x in input().split(" ")]
-        edges.append(person)
+    # We only need enough capacity up to the max node value or standard constraint
+    MAX_NODES = 300005
+    parent = list(range(MAX_NODES))
+    rank = [0] * MAX_NODES
 
     def find(x):
-        if x != parent[x]:
-            parent[x] = find(parent[x])
-        return parent[x]
+        # Path compression (iterative or standard recursive)
+        root = x
+        while root != parent[root]:
+            root = parent[root]
+
+        curr = x
+        while curr != root:
+            nxt = parent[curr]
+            parent[curr] = root
+            curr = nxt
+        return root
 
     def union(x, y):
-        parent_x = find(x)
-        parent_y = find(y)
-        if parent_x != parent_y:
-            parent[parent_y] = parent_x
+        root_x = find(x)
+        root_y = find(y)
+        if root_x == root_y:
+            return
 
-        rep.append(parent_x)
+        # Union by rank to keep the tree flat
+        if rank[root_x] < rank[root_y]:
+            parent[root_x] = root_y
+        elif rank[root_x] > rank[root_y]:
+            parent[root_y] = root_x
+        else:
+            parent[root_y] = root_x
+            rank[root_x] += 1
 
-    for x, y in edges:
-        union(x, y)
+    # Keep track of active vertices present in the input
+    active_nodes = set()
 
-    for val in rep:
-        final_rep.append(find(val))
+    for _ in range(n):
+        u = int(next(it))
+        v = int(next(it))
+        union(u, v)
+        active_nodes.add(u)
+        active_nodes.add(v)
 
-    guest = len(set(final_rep)) - 1
+    if not active_nodes:
+        print(0)
+        return
 
-    print(guest)
+    # Count distinct component leaders among all active nodes
+    components = {find(node) for node in active_nodes}
+
+    # Minimum additional edges needed to connect all components
+    ans = len(components) - 1
+    sys.stdout.write(str(ans) + "\n")
 
 
-guste()
+if __name__ == "__main__":
+    guest()

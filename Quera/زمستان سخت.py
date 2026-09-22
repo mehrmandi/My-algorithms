@@ -1,6 +1,7 @@
+import sys
+
 def solve():
-    k = int(input())
+    data = 
     
-    a = list(map(int, input().split()))
     
     
