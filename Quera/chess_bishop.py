@@ -1,7 +1,9 @@
-#  n is the nuumber of rows
-#  m is the number of columns
-n, m = [int(x) for x in input().split(" ")]
+import sys
+import os
 
+# --- LOCAL TESTING (Optional) ---
+if os.path.exists("input.txt"):
+    sys.stdin = open("input.txt", "r")
 
 
 def bishopLocation(n, m):
@@ -20,4 +22,18 @@ def bishopLocation(n, m):
         print("")
 
 
-bishopLocation(n, m)
+def main():
+    # Read all tokens at once
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
+        return
+
+    it = iter(input_data)
+    n = int(next(it))
+    m = int(next(it))
+
+    bishopLocation(n, m)
+
+
+if __name__ == "__main__":
+    main()
