@@ -1,8 +1,6 @@
-#  number of cities in length
 m = int(input())
-
-#  number of cities in width
 n = int(input())
+
 
 def borderCity(m, n):
     if m == 1:

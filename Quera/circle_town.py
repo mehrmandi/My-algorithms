@@ -1,8 +1,5 @@
-n, m = [int(x) for x in input().split(" ")]
+import sys
 
-d = [int(x) for x in input().split(" ")]
-
-c = [int(x) for x in input().split(" ")]
 
 def isAccess(d):
     if 0 in d and 1 in d:
@@ -11,4 +8,21 @@ def isAccess(d):
         print("NO")
 
 
-isAccess(d)
+def main():
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
+        return
+
+    it = iter(input_data)
+
+    n = int(next(it))
+    m = int(next(it))
+
+    d = [int(next(it)) for _ in range(n)]
+    c = [int(next(it)) for _ in range(n)]
+
+    isAccess(d)
+
+
+if __name__ == "__main__":
+    main()
