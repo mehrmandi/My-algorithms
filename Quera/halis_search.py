@@ -1,95 +1,80 @@
-sherlok = int(input())
-v = int(input()) + 1
-line = int(input())
-edges = []
-graph = [[] for _ in range(v)]
-cycles = [[] for i in range(v)]
-color = [0] * v
-par = [0] * v
-cyclenumber = 0
-shortest_path = [0] * 9999
+import sys
+from collections import deque
 
-for i in range(line):
-    edge = [int(x) for x in input().split(" ")]
-    edges.append(edge)
 
-for edge in edges:
-    graph[edge[0]].append(edge[1])
-    graph[edge[1]].append(edge[0])
-
-def dfs_cycle(u, p, color: list,
-              par: list):
-    global cyclenumber
-
-    if color[u] == 2:
+def solve():
+    # Read all tokens from standard input using fast I/O
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
         return
 
-    if color[u] == 1:
-        q = []
-        cur = p
-        q.append(cur)
+    iterator = iter(input_data)
 
-        while cur != u:
-            cur = par[cur]
-            q.append(cur)
-        cycles[cyclenumber] = q
-        cyclenumber += 1
+    k = int(next(iterator))  # Sherlock's starting city
+    n = int(next(iterator))  # Number of cities (vertices)
+    m = int(next(iterator))  # Number of roads (edges)
 
-        return
+    # 1-indexed adjacency list and degree array
+    adj = [[] for _ in range(n + 1)]
+    degree = [0] * (n + 1)
 
-    par[u] = p
+    for _ in range(m):
+        u = int(next(iterator))
+        v = int(next(iterator))
+        adj[u].append(v)
+        adj[v].append(u)
+        degree[u] += 1
+        degree[v] += 1
 
-    color[u] = 1
+    # Step 1: Iteratively prune leaf nodes (degree <= 1) to find cycle vertices
+    # Any node belonging to a simple cycle has degree >= 2 and cannot be pruned.
+    deg = list(degree)
+    queue = deque([i for i in range(1, n + 1) if deg[i] <= 1])
+    is_cycle_node = [True] * (n + 1)
 
-    for v in graph[u]:
+    while queue:
+        curr = queue.popleft()
+        is_cycle_node[curr] = False
+        for neighbor in adj[curr]:
+            if is_cycle_node[neighbor]:
+                deg[neighbor] -= 1
+                if deg[neighbor] <= 1:
+                    queue.append(neighbor)
 
-        if v == par[u]:
-            continue
-        dfs_cycle(v, u, color, par)
+    # Step 2: BFS starting from Sherlock's city (k) to find the shortest path
+    # to the first cycle node encountered.
+    parent = [-1] * (n + 1)
+    visited = [False] * (n + 1)
 
-    color[u] = 2
+    bfs_queue = deque([k])
+    visited[k] = True
+    target_node = -1
 
+    while bfs_queue:
+        curr = bfs_queue.popleft()
 
+        # If we reached a node that belongs to a cycle, stop
+        if is_cycle_node[curr]:
+            target_node = curr
+            break
 
+        for neighbor in adj[curr]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                parent[neighbor] = curr
+                bfs_queue.append(neighbor)
 
-dfs_cycle(1, 0, color, par)
-
-
-def bfs(graph, s, par, dist):
-    q = []
-    dist[s] = 0
-    q.append(s)
-    while q:
-        node = q.pop(0)
-        for neighbor in graph[node]:
-            if dist[neighbor] == float('inf'):
-                par[neighbor] = node
-                dist[neighbor] = dist[node] + 1
-                q.append(neighbor)
-
-
-def shortest_distance(graph, S, D, V):
-    global shortest_path
-    par = [-1] * V
-    dist = [float('inf')] * V
-    bfs(graph, S, par, dist)
-
+    # Step 3: Reconstruct the path from k to target_node
     path = []
-    current_node = D
-    path.append(D)
-    while par[current_node] != -1:
-        path.append(par[current_node])
-        current_node = par[current_node]
-
+    curr = target_node
+    while curr != -1:
+        path.append(curr)
+        curr = parent[curr]
     path.reverse()
-    if len(path) < len(shortest_path):
-        shortest_path = path
+
+    # Print the resulting path
+    print(*(path))
 
 
-for i in range(0, cyclenumber):
-    for D in cycles[i]:
-        shortest_distance(graph, sherlok, D, v)
-
-
-for x in shortest_path:
-    print(x, end=" ")
+if __name__ == '__main__':
+    solve()

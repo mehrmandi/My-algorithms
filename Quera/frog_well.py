@@ -1,22 +1,32 @@
-#  number of input try
-n = int(input())
+import sys
 
-#  Define a function to calculate the departure day
-def dayCount(array):
-    try_day = 0
-    height = 0
-    while height < array[2]:
-        try_day += 1
-        height += array[0]
-        if height < array[2]:
-            height -= array[1]
-    print(try_day)
 
-#  Get properties inputs n times
-for i in range(n):
-    try_prop = [int(x) for x in (input().split(" "))]
-    dayCount(try_prop)
+def solve():
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
+        return
 
+    it = iter(input_data)
+    n = int(next(it))
+
+    results = []
+    for _ in range(n):
+        u = int(next(it))  
+        d = int(next(it))  
+        h = int(next(it))  
+
+        if u >= h:
+            results.append("1")
+        else:
+            net_gain = u - d
+            days = 1 + (h - u + net_gain - 1) // net_gain
+            results.append(str(days))
+
+    sys.stdout.write("\n".join(results) + "\n")
+
+
+if __name__ == "__main__":
+    solve()
 
 
 

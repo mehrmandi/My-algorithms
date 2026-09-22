@@ -1,27 +1,40 @@
-import math
-
-#  q is the number of questions
-#  t is Peygir answer interval
-q, t = [int(x) for x in input().split(" ")]
+import sys
 
 
-#  define a function to calculate the name of ith chat author
-def personName(number, interval):
-    i = 0
-    for i in range(number):
-        chat_num = int(input())
-        n = math.ceil(chat_num / (interval + 1))
-        other_num = (chat_num - n) % 3
-        if chat_num % (interval + 1) == 1:
-            print("Peygir")
-        elif other_num == 1:
-            print("Tannaz")
-        elif other_num == 2:
-            print("Jeddy")
+def solve():
+    # Read all tokens from standard input
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
+        return
+
+    iterator = iter(input_data)
+
+    # Read number of queries and Peygir's reply interval
+    q = int(next(iterator))
+    t = int(next(iterator))
+
+    cycle = t + 1
+    # Mapping remainder to the person's name
+    other_members = ("Morshed", "Tannaz", "Jeddy")
+
+    output = []
+
+    for _ in range(q):
+        chat_num = int(next(iterator))
+
+        # Peygir talks at positions: 1, (t + 2), (2t + 3), ...
+        if (chat_num - 1) % cycle == 0:
+            output.append("Peygir")
         else:
-            print("Morshed")
-        i += 1
+            # Count how many messages Peygir has sent before this chat_num
+            peygir_count = (chat_num - 1) // cycle + 1
+            # Index among the remaining 3 people (1-based)
+            non_peygir_idx = chat_num - peygir_count
+            output.append(other_members[non_peygir_idx % 3])
+
+    # Output all results efficiently
+    sys.stdout.write("\n".join(output) + "\n")
 
 
-
-personName(q, t)
+if __name__ == '__main__':
+    solve()

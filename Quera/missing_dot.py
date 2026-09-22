@@ -1,42 +1,34 @@
+import sys
 
 
+def solve():
+    # Read all input values at once
+    input_data = sys.stdin.buffer.read().split()
+    if not input_data:
+        return
+
+    iterator = iter(input_data)
+
+    missing_x = 0
+    missing_y = 0
+    missing_z = 0
+
+    # In a rectangular cuboid (8 vertices), each coordinate component
+    # appears an even number of times (4 times each).
+    # Since one vertex is missing, the missing coordinate is the XOR sum
+    # of the existing 7 coordinate values along each axis.
+    for _ in range(7):
+        x = int(next(iterator))
+        y = int(next(iterator))
+        z = int(next(iterator))
+
+        missing_x ^= x
+        missing_y ^= y
+        missing_z ^= z
+
+    # Output the coordinates of the missing vertex
+    print(missing_x, missing_y, missing_z)
 
 
-def findMissingDot():
-    cube = []
-    for i in range(7):
-        cube_face = [int(x) for x in input().split(" ")]
-        cube.append(cube_face)
-    x = []
-    y = []
-    z = []
-    for i in range(7):
-        x.append(cube[i][0])
-        y.append(cube[i][1])
-        z.append(cube[i][2])
-    x.sort()
-    y.sort()
-    z.sort()
-    x1 = x.count(x[0])
-    x2 = x.count(x[6])
-    y1 = y.count(y[0])
-    y2 = y.count(y[6])
-    z1 = z.count(z[0])
-    z2 = z.count(z[6])
-    if x1 == 4:
-        print(x[6], end=" ")
-    else:
-        print(x[0], end=" ")
-    if y1 == 4:
-        print(y[6], end=" ")
-    else:
-        print(y[0], end=" ")
-    if z1 == 4:
-        print(z[6], end=" ")
-    else:
-        print(z[0], end=" ")
-
-
-
-
-findMissingDot()
+if __name__ == '__main__':
+    solve()

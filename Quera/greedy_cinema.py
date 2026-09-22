@@ -1,35 +1,32 @@
-import random
-import math
+import sys
 
-letters = "abcdefghijlmopqrstuvwxyz"
-random_letters = []
 
-#  n is the number of quera employees
-#  k is the capacity of the cinema
-n, k = [int(i) for i in input().split(" ")]
+def solve():
+    data = sys.stdin.buffer.read().split()
 
-# Generate n Random letters except of k and n
-for i in range(n):
-    random_letter = random.choice(letters)
-    random_letters += random_letter
+    n = int(data[0])
+    k = int(data[1])
 
-#  random letters are the number of employee's friends
-friends_sorted = [int(num) for num in input().split(" ")]
-friends_sorted.sort()
+    friends = [int(x) for x in data[2:2 + n]]
+    friends.sort()
 
-#  calculate max number of employees that can go to cinema with them friends
-def maxEmployee(quera_num, cinema_cap):
-    max_employee = 0
-    while quera_num > 0:
-        cinema_cap -= friends_sorted[max_employee] + 1
-        if cinema_cap < 0:
+    taken = 0
+    seats_left = k
+
+    for f in friends:
+        need = f + 1  
+        if seats_left >= need:
+            seats_left -= need
+            taken += 1
+        else:
             break
-        max_employee += 1
-        quera_num -= 1
-    print(max_employee)
+
+    print(taken)
 
 
-maxEmployee(n, k)
+if __name__ == "__main__":
+    solve()
+
 
 
 
