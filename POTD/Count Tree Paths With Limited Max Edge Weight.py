@@ -1,3 +1,20 @@
+# Given a weighted tree with n nodes, numbered from 1 to n and n - 1 edges, where each edge is represented as [u, v, w] indicating an edge between nodes u and v with weight w.
+
+# You are also given an array queries[], where each queries[i] represents a maximum allowed edge weight.
+
+# For each query x, find the number of distinct paths in the tree such that the maximum edge weight along the path is less than or equal to x.
+
+# Return an array containing the number of valid paths for each query.
+
+# Note:
+
+# A path from node u to node v and the path from node v to node u are considered the same path.
+# A path must contain at least one edge. A path from a node to itself is not considered.
+
+# DSU with Sorting and Map - O(n log n + q log n) Time and O(n) Space
+
+
+
 from bisect import bisect_right
 
 # Find the representative of a set.
