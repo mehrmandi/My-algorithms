@@ -6,14 +6,11 @@
 # Count Contribution of Each Digit - O(n) Time and O(1) Space
 
 def subsequenceSum(s):
-    MOD = 1000000007
-    n = len(s)
-    res = 0
-    
-    for i in range(n):
-        res += int(s[i])
-        
-    return (res * (2 ** (n - 1))) % MOD 
+    MOD = 10**9 + 7
+
+    digitSum = sum(int(ch) for ch in s) % MOD
+
+    return (digitSum * pow(2, len(s) - 1, MOD)) % MOD
     
     
 s = "485107265874226987"
